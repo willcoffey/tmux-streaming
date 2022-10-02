@@ -21,14 +21,14 @@ exec /usr/sbin/tmux -S /home/guest/.tmux-session/session attach -r
 `-r`  signifies the client is read-only (only keys bound to the detach-client or switch-client
       commands have any effect). Without this the guest can fully interact with the session.
 
-## 2. Create a guest user with `nologin` as shell and generate a home directory (`-m`).
+## 2. Create a guest use 
 ---
-
 ```sh
 sudo useradd guest -ms /usr/sbin/nologin
 ```
-`start.sh` sets shell to `/usr/sbin/tmux-login` when run and resets it to `/usr/sbin/nologin` when
-done.
+`-m` Generates a home directory
+`-s /usr/sbin/nologin` Sets the login shell to disable logging in as guest. `start.sh` sets the 
+ogin shell to `/usr/sbin/tmux-login` which enables login and disables it again once complete.
 
 ### - 2.1 Allow password login for guest user if needed.
 ---
@@ -42,9 +42,8 @@ Match all
 restart ssh server
 `sudo service sshd restart`
 
-## 3. Create `/home/guest/.tmux-session`
+## 3. Create `.tmux-session` directory
 ---
-give HOST ownership and guest as group.
 ```sh
 sudo mkdir /home/guest/.tmux-session
 sudo chown HOST /home/guest/.tmux-session
