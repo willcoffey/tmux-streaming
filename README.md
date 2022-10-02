@@ -28,7 +28,7 @@ sudo useradd guest -ms /usr/sbin/nologin
 `-m` Generates a home directory
 
 `-s /usr/sbin/nologin` Sets the login shell to disable logging in as guest. `start.sh` sets the 
-ogin shell to `/usr/sbin/tmux-login` which enables login and disables it again once complete.
+login shell to `/usr/sbin/tmux-login` which enables login and disables it again once complete.
 
 ### 2.1 Allow password login for guest user if needed.
 ---
