@@ -21,27 +21,30 @@ exec /usr/sbin/tmux -S /home/guest/.tmux-session/session attach -r
 `-r`  signifies the client is read-only (only keys bound to the detach-client or switch-client
       commands have any effect). Without this the guest can fully interact with the session.
 
-## 2. Create a guest user with tmux-login as login shell (`-s`) and generate a home directory (`-m`).
+## 2. Create a guest user with `nologin` as shell and generate a home directory (`-m`).
 ---
 
 ```sh
 sudo useradd guest -ms /usr/sbin/nologin
 ```
-note that `start.sh` sets shell when run and resets it to `nologin` whe done.
+`start.sh` sets shell to `/usr/sbin/tmux-login` when run and resets it to `/usr/sbin/nologin` when
+done.
 
-### - 2.1 Allow password login for guest user in `/etc/ssh/sshd_config` if needed.
+### - 2.1 Allow password login for guest user if needed.
 ---
+Add the follwing lines to `/etc/ssh/sshd_config` 
 ```
 Match User guest
   PasswordAuthentication yes
 Match all
 ```
-restart ssh server `sudo service sshd restart`
 
+restart ssh server
+`sudo service sshd restart`
 
-## 3. Create `/home/guest/.tmux-session` owned by `guest` but with group permissions for host user and
+## 3. Create `/home/guest/.tmux-session`
 ---
-give HOST ownership and guest as group
+give HOST ownership and guest as group.
 ```sh
 sudo mkdir /home/guest/.tmux-session
 sudo chown HOST /home/guest/.tmux-session
@@ -49,10 +52,10 @@ sudo chgrp guest /home/guest/.tmux-session
 ```
 
 ## 4. Run the `start.sh` script to do the following: 
-  - Create new tmux session and socket in `/home/guest/.tmux-session/session`. If a session already exists
+  - Create new tmux session in `/home/guest/.tmux-session/session`. If a session already exists
     it won't be overwritten.
-  - Generates a new password for the guest user, display it, and wait for enter. (if you cancel the script at this point
-    the guest account could ssh in and attach to session)
+  - Generates a new password for the guest user, display it, and wait for enter. (if you cancel the
+    script at this point the guest account could ssh in and attach to session)
   - Attach to the session.
   - Wait for host to detach or closes the session
   - Kill all processes from guest user
@@ -67,11 +70,11 @@ detach shortcut key.
 
 # Notes
 ---
-Checkout the `script` and `scriptreplay` tools for creating recordings of sessions.
+Check out the `script` and `scriptreplay` tools for creating recordings of sessions.
 
+The terminal won't resize to the guest terminal, the host will need to manually resize it either by
+resizing terminal window or running tmux command 'resize-window -x 80 -y 24`. 
 
-The terminal won't resize to the guest terminal, host will need to manual resize to accommodate 
-if smaller either by resizing terminal window or running tmux command 'resize-window -x 80 -y 24`. 
 `resize-window -A` will automatically resize the tmux window back to hosts dimensions.
 
 
