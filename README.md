@@ -16,17 +16,17 @@ Save the following to `/usr/sbin/tmux-login` with `-rwxr-xr-x 1 root root` permi
 #!/usr/bin/bash
 exec /usr/sbin/tmux -S /home/guest/.tmux-session/session attach -r
 ```
-
 `-S /home/guest/.tmux-session/session` is the path to the unix socket tmux creates.
+
 `-r`  signifies the client is read-only (only keys bound to the detach-client or switch-client
       commands have any effect). Without this the guest can fully interact with the session.
-
-## 2. Create a guest use 
+## 2. Create a guest user
 ---
 ```sh
 sudo useradd guest -ms /usr/sbin/nologin
 ```
 `-m` Generates a home directory
+
 `-s /usr/sbin/nologin` Sets the login shell to disable logging in as guest. `start.sh` sets the 
 ogin shell to `/usr/sbin/tmux-login` which enables login and disables it again once complete.
 
