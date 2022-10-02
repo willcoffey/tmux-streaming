@@ -30,7 +30,7 @@ sudo useradd guest -ms /usr/sbin/nologin
 `-s /usr/sbin/nologin` Sets the login shell to disable logging in as guest. `start.sh` sets the 
 ogin shell to `/usr/sbin/tmux-login` which enables login and disables it again once complete.
 
-### - 2.1 Allow password login for guest user if needed.
+### 2.1 Allow password login for guest user if needed.
 ---
 Add the follwing lines to `/etc/ssh/sshd_config` 
 ```
@@ -40,6 +40,7 @@ Match all
 ```
 
 restart ssh server
+
 `sudo service sshd restart`
 
 ## 3. Create `.tmux-session` directory
@@ -56,7 +57,7 @@ sudo chgrp guest /home/guest/.tmux-session
   - Generates a new password for the guest user, display it, and wait for enter. (if you cancel the
     script at this point the guest account could ssh in and attach to session)
   - Attach to the session.
-  - Wait for host to detach or closes the session
+  - Wait for host to detach or close the session
   - Kill all processes from guest user
   - Generate a new random password for the guest user.
   - Set guest user to nologin shell
