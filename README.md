@@ -73,7 +73,7 @@ detach shortcut key.
 Check out the `script` and `scriptreplay` tools for creating recordings of sessions.
 
 The terminal won't resize to the guest terminal, the host will need to manually resize it either by
-resizing terminal window or running tmux command 'resize-window -x 80 -y 24`. 
+resizing terminal window or running tmux command `resize-window -x 80 -y 24`. 
 
 `resize-window -A` will automatically resize the tmux window back to hosts dimensions.
 
